@@ -1,0 +1,28 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.informacion{
+    padding: v.$separacion ;
+    &__heading{
+        text-align: center;
+        color: v.$secundario;
+    }
+    &__grid{
+        @include m.tablet { 
+            @include m.grid(2,v.$separacion)
+        }
+    }
+    &__descripcion{
+        line-height: 1.5;
+        color: v.$secundario;
+    }
+    &__texto{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: flex-start
+    }
+    &__btn{
+        @include m.boton(v.$primario, v.$blanco);
+    }
+}
