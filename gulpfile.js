@@ -12,16 +12,13 @@ const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const avif = require('gulp-avif');
 
-function css(done) {
-  src('src/scss/app.scss')
+function css() {
+  return src('src/scss/app.scss')
     .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(postcss([autoprefixer(), cssnano()]))
     .pipe(sourcemaps.write('.'))
-    .pipe(dest('build/css'))
-    .on('end', done); // Mueve la llamada a 'done' aquí
-
-  // done(); // Elimina esta línea
+    .pipe(dest('build/css'));
 }
 
 function imagenes() {
@@ -48,14 +45,17 @@ function versionAvif() {
     .pipe(dest('build/img'));
 }
 
-function dev() {
-  watch('src/scss/**/*.scss', css);
-  watch('src/img/**/*', imagenes);
+function devCss() {
+  return watch('src/scss/**/*.scss', css);
+}
+
+function devImagenes() {
+  return watch('src/img/**/*', imagenes);
 }
 
 exports.css = css;
-exports.dev = dev;
+exports.dev = series(imagenes, versionWebp, versionAvif, css, devCss, devImagenes);
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
-exports.default = series(imagenes, versionWebp, versionAvif, css, dev);
+exports.default = series(imagenes, versionWebp, versionAvif, css, devCss, devImagenes);
