@@ -1,4 +1,4 @@
-const { src, dest, watch, series } = require('gulp');
+const { src, dest, watch, series, parallel } = require('gulp');
 
 // CSS y SASS
 const sass = require('gulp-sass')(require('sass'));
@@ -46,7 +46,7 @@ function versionAvif() {
 }
 
 function devCss() {
-  return watch('src/scss/**/*.scss', css);
+  return series(css, () => watch('src/scss/**/*.scss', css));
 }
 
 function devImagenes() {
@@ -54,7 +54,7 @@ function devImagenes() {
 }
 
 exports.css = css;
-exports.dev = series(imagenes, versionWebp, versionAvif, css, devCss, devImagenes);
+exports.dev = parallel(series(imagenes, versionWebp, versionAvif, devCss), devImagenes);
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
