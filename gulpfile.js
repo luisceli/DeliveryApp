@@ -46,7 +46,10 @@ function versionAvif() {
 }
 
 function devCss() {
-  return series(css, () => watch('src/scss/**/*.scss', css));
+  return new Promise((resolve) => {
+    watch('src/scss/**/*.scss', series(css));
+    resolve();
+  });
 }
 
 function devImagenes() {
