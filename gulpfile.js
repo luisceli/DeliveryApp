@@ -28,6 +28,13 @@ function imagenes() {
         .pipe( dest('build/img') )
 }
 
+// Ejemplo para copiar index.html a la carpeta build
+function copiarHTML() {
+  return src('index.html')
+      .pipe(dest('build/'));
+}
+
+
 function versionWebp() {
     const opciones = {
         quality: 50
@@ -56,4 +63,4 @@ exports.dev = dev;
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
-exports.default = series( imagenes, versionWebp, versionAvif, css );
+exports.default = series( imagenes, versionWebp, versionAvif, css, copiarHTML );
