@@ -19,7 +19,6 @@ function css( done ) {
         .pipe( postcss([ autoprefixer(), cssnano() ]) )
         .pipe( sourcemaps.write('.'))
         .pipe( dest('build/css') )
-
     done();
 }
 
@@ -57,4 +56,4 @@ exports.dev = dev;
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
-exports.default = series( imagenes, versionWebp, versionAvif, css, dev  );
+exports.default = series( imagenes, versionWebp, versionAvif, css );
